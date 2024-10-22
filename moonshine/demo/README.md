@@ -21,8 +21,9 @@ Moonshine installation steps are available in the
 
 First install the `uv` standalone installer as
 [described here](https://github.com/astral-sh/uv?tab=readme-ov-file#installation).
-If you don't want to use `uv` simply skip the virtual environment installation
-and activation, and leave `uv` off of the shell commands for `pip install`.
+Close the shell and re-open after the install.  If you don't want to use `uv`
+simply skip the virtual environment installation and activation, and leave `uv`
+off of the shell commands for `pip install`.
 
 Create the virtual environment and install dependences for Moonshine.
 ```console
