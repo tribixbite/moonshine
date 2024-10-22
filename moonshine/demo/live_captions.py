@@ -19,7 +19,7 @@ MARKER_LENGTH = 6
 MAX_LINE_LENGTH = 80
 
 MAX_SPEECH_DURATION = 15
-REFRESH_SECS = 0.5   # Set higher with slower CPU or larger model size.
+REFRESH_SECS = 0.5   # Set higher with slower CPU.
 
 VERBOSE = False
 
@@ -48,13 +48,13 @@ def create_source_callback(q):
 
 
 def end_recording(speech, marker=""):
-    """Transcribes, caches and prints the caption.  Zeroes speech."""
+    """Transcribes, caches and prints the caption.  Clears speech buffer."""
     if len(marker) != MARKER_LENGTH:
         raise ValueError("Unexpected marker length.")
     text = transcribe(speech)
     caption_cache.append(text + " " + marker)
     print_captions(text + (" " + marker) if VERBOSE else "")
-    speech *= 0.0  # Clear speech buffer.
+    speech *= 0.0
 
 
 def print_captions(text):
