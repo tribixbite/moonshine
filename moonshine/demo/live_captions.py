@@ -14,12 +14,14 @@ from moonshine import load_model, ASSETS_DIR
 
 SAMPLING_RATE = 16000
 
+CHUNK_SIZE = 512 if SAMPLING_RATE == 16000 else 256
 LOOKBACK_CHUNKS = 5
 MARKER_LENGTH = 6
 MAX_LINE_LENGTH = 80
 
-MAX_SPEECH_DURATION = 15
-REFRESH_SECS = 0.5   # Set higher with slower CPU.
+# These affect live caption updates - adjust for your platform.
+MAX_SPEECH_SECS = 15
+REFRESH_SECS = 0.5
 
 VERBOSE = False
 
@@ -89,14 +91,14 @@ q = Queue()
 stream = InputStream(
     samplerate=SAMPLING_RATE,
     channels=1,
-    blocksize=512 if SAMPLING_RATE == 16000 else 256,
+    blocksize=CHUNK_SIZE,
     dtype=np.float32,
     callback=create_source_callback(q),
 )
 stream.start()
 
 caption_cache = []
-lookback_size = LOOKBACK_CHUNKS * 512 if SAMPLING_RATE == 16000 else 256
+lookback_size = LOOKBACK_CHUNKS * CHUNK_SIZE
 speech = np.empty(0, dtype=np.float32)
 
 recording = False
@@ -129,7 +131,7 @@ with stream:
 
             elif recording:
                 # Possible speech truncation can cause hallucination.
-                if (len(speech) / SAMPLING_RATE) > MAX_SPEECH_DURATION:
+                if (len(speech) / SAMPLING_RATE) > MAX_SPEECH_SECS:
                     recording = False
                     end_recording(speech, "<SNIP>")
                     # Soft reset without affecting VAD model state.
