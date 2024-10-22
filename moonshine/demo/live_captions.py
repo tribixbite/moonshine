@@ -82,8 +82,7 @@ vad_iterator = VADIterator(
     model=vad_model,
     sampling_rate=SAMPLING_RATE,
     threshold=0.5,
-    min_silence_duration_ms=2000,
-    speech_pad_ms=400,
+    min_silence_duration_ms=300,
 )
 
 q = Queue()
