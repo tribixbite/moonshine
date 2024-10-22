@@ -34,6 +34,12 @@ source env_moonshine_demo/bin/activate
 uv pip install useful-moonshine@git+https://github.com/usefulsensors/moonshine.git
 ```
 
+If you can't find the `moonshine` repo folder in your home folder then clone
+with git command (seen on an SBC Ubuntu install).
+```
+git clone git@github.com:usefulsensors/moonshine.git
+```
+
 The demo requires these additional dependencies.
 ```console
 uv pip install -r moonshine/moonshine/demo/requirements.txt
