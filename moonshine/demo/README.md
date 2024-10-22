@@ -22,8 +22,8 @@ Moonshine installation steps are available in the
 First install the `uv` standalone installer as
 [described here](https://github.com/astral-sh/uv?tab=readme-ov-file#installation).
 Close the shell and re-open after the install.  If you don't want to use `uv`
-simply skip the virtual environment installation and activation, and leave `uv`
-off of the shell commands for `pip install`.
+simply skip the virtual environment installation and subsequent activation, and
+leave `uv` off the shell commands for `pip install`.
 
 Create the virtual environment and install dependences for Moonshine.
 ```console
@@ -84,9 +84,11 @@ transcription result.
 
 If you run this script on a slower processor consider increasing the value of
 `REFRESH_SECS` to reduce the period of refresh predictions.  This avoids
-overloading the script's main thread and prevents increasingly slower caption updates.  Also consider reducing the value of `MAX_SPEECH_DURATION` to avoid slower model inferencing with longer speech.
+overloading the script's main thread and prevents increasingly slower caption
+updates.  Also consider reducing the value of `MAX_SPEECH_SECS` to avoid slower
+model inferencing with longer speech.
 
 # Future work.
 
-* The script uses Python Torch version of the model.  Faster inferencing and caption updates are expected with an ONNX runtime version of the model.
+* The script uses Python Torch version of the model.  Add ONNX runtime version of the model.
 * Short pause detection to mitigate speech truncation with refresh and timeout transcriptions.
