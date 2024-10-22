@@ -18,7 +18,7 @@ CHUNK_SIZE = 512 if SAMPLING_RATE == 16000 else 256
 LOOKBACK_CHUNKS = 5
 MARKER_LENGTH = 6
 MAX_LINE_LENGTH = 80
-SHOW_NEW_CAPTION = False
+SHOW_NEW_CAPTION = True
 
 # These affect live caption updates - adjust for your platform.
 MAX_SPEECH_SECS = 15
