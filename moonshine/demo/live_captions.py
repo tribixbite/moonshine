@@ -3,6 +3,7 @@ import time
 
 from queue import Queue
 
+import keras
 import numpy as np
 import tokenizers
 
@@ -33,7 +34,8 @@ class Transcriber(object):
 
     def __call__(self, speech):
         """Returns string containing Moonshine transcription of speech."""
-        tokens = self.model.generate(speech[np.newaxis, :])
+        y = keras.ops.expand_dims(keras.ops.convert_to_tensor(speech), 0)
+        tokens = self.model.generate(y)
         return self.tokenizer.decode_batch(tokens)[0]
 
 
