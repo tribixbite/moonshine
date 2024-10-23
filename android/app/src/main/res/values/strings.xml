@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moonshine</string>
+    <string name="status_idle">Status: Idle</string>
+    <string name="pick_audio_file">Pick Audio File</string>
+    <string name="pick_video_file">Pick Video File</string>
+    <string name="transcribing_audio">Transcribing audio...</string>
+    <string name="transcribing_video">Transcribing video...</string>
+    <string name="permissions_denied">Permissions denied. Cannot access files.</string>
+</resources>

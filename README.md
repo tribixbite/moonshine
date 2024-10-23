@@ -101,6 +101,23 @@ python
 
 The first argument is a path to an audio file and the second is the name of a Moonshine model. `moonshine/tiny` and `moonshine/base` are the currently available models.
 
+## Building and Running the Android App
+
+### Prerequisites
+
+- Android Studio installed on your machine.
+- Android device or emulator for testing.
+
+### Steps
+
+1. Open Android Studio and select "Open an existing Android Studio project".
+2. Navigate to the `android` directory in this repository and open it.
+3. Let Android Studio download any necessary dependencies.
+4. Connect your Android device or start an emulator.
+5. Click on the "Run" button in Android Studio to build and run the app on your device/emulator.
+
+The app allows you to pick audio or video files from your device and transcribe them to text. The transcriptions can be saved in md/txt/json formats.
+
 ## TODO
 * [ ] Live transcription demo
     
