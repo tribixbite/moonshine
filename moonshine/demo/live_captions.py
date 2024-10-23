@@ -3,7 +3,6 @@ import time
 
 from queue import Queue
 
-import keras
 import numpy as np
 import tokenizers
 
@@ -18,7 +17,7 @@ CHUNK_SIZE = 512 if SAMPLING_RATE == 16000 else 256
 LOOKBACK_CHUNKS = 5
 MARKER_LENGTH = 6
 MAX_LINE_LENGTH = 80
-SHOW_NEW_CAPTION = True
+SHOW_NEW_CAPTION = False
 
 # These affect live caption updates - adjust for your platform.
 MAX_SPEECH_SECS = 15
@@ -33,13 +32,23 @@ class Transcriber(object):
         self.model = load_model("moonshine/tiny")
         tokenizer_file = ASSETS_DIR / "tokenizer.json"
         self.tokenizer = tokenizers.Tokenizer.from_file(str(tokenizer_file))
+
+        self.inference_secs = 0
+        self.number_inferences = 0
+        self.speech_secs = 0
         self.__call__(np.zeros(int(SAMPLING_RATE)))  # Warmup.
 
     def __call__(self, speech):
         """Returns string containing Moonshine transcription of speech."""
-        y = keras.ops.expand_dims(keras.ops.convert_to_tensor(speech), 0)
-        tokens = self.model.generate(y)
-        return self.tokenizer.decode_batch(tokens)[0]
+        self.number_inferences += 1
+        self.speech_secs += len(speech) / SAMPLING_RATE
+        start_time = time.time()
+
+        tokens = self.model.generate(speech[np.newaxis, :])
+        text = self.tokenizer.decode_batch(tokens)[0]
+
+        self.inference_secs += time.time() - start_time
+        return text
 
 
 def create_source_callback(q):
@@ -149,9 +158,13 @@ with stream:
 
     except KeyboardInterrupt:
         stream.close()
-
+        print(f"""
+      number inferences :  {transcribe.number_inferences}
+    mean inference time :  {(transcribe.inference_secs / transcribe.number_inferences):.2f}s
+  model realtime factor :  {(transcribe.speech_secs / transcribe.inference_secs):0.2f}x
+""")
         if caption_cache:
-            print("\nCached captions.")
+            print("Cached captions.")
             for caption in caption_cache:
                 print(caption[:-MARKER_LENGTH], end="", flush=True)
         print("")
