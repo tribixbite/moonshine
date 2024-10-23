@@ -1,0 +1,16 @@
+LICENSE
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+moonshine/__init__.py
+moonshine/model.py
+moonshine/transcribe.py
+moonshine/version.py
+moonshine/assets/beckett.wav
+moonshine/assets/tokenizer.json
+useful_moonshine.egg-info/PKG-INFO
+useful_moonshine.egg-info/SOURCES.txt
+useful_moonshine.egg-info/dependency_links.txt
+useful_moonshine.egg-info/requires.txt
+useful_moonshine.egg-info/top_level.txt

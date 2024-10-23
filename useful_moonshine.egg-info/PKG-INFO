@@ -1,3 +1,28 @@
+Metadata-Version: 2.1
+Name: useful-moonshine
+Version: 20241016
+Summary: Speech Recognition for Live Transcription and Voice Commands
+Home-page: https://github.com/usefulesensors/moonshine
+Author: Useful Sensors
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numba
+Requires-Dist: tokenizers==0.20.0
+Requires-Dist: einops==0.8.0
+Requires-Dist: librosa==0.10.2.post1
+Requires-Dist: torch==2.4.1
+Requires-Dist: keras==3.6.0
+Provides-Extra: tensorflow
+Requires-Dist: tensorflow==2.17.0; extra == "tensorflow"
+Provides-Extra: jax
+Requires-Dist: jax==0.4.34; extra == "jax"
+Requires-Dist: keras==3.6.0; extra == "jax"
+Provides-Extra: jax-cuda
+Requires-Dist: jax[cuda12]; extra == "jax-cuda"
+Requires-Dist: keras==3.6.0; extra == "jax-cuda"
+
 <p align="center">
   <img src="logo.png" width="192px" />
 </p>

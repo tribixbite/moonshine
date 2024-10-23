@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "test": "pip install -r requirements.txt && pytest",
+    "build": "pip install -r requirements.txt && pip install -e .",
+    "launch": "pip install useful-moonshine@git+https://github.com/usefulsensors/moonshine.git && export KERAS_BACKEND=torch"
+  }
+}
