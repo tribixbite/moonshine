@@ -4,3 +4,6 @@ einops==0.8.0
 librosa==0.10.2.post1
 torch==2.4.1
 keras==3.6.0
+build-tools
+platform-tools
+gradle
