@@ -6,11 +6,13 @@ from .model import load_model, Moonshine
 from . import ASSETS_DIR
 
 
-def load_audio(audio):
+def load_audio(audio, return_numpy=False):
     if isinstance(audio, (str, Path)):
         import librosa
 
         audio, _ = librosa.load(audio, sr=16_000)
+        if return_numpy:
+            return audio[None, ...]
         audio = keras.ops.expand_dims(keras.ops.convert_to_tensor(audio), 0)
     return audio
 
@@ -35,9 +37,28 @@ def transcribe(audio, model="moonshine/base"):
     assert_audio_size(audio)
 
     tokens = model.generate(audio)
+    return load_tokenizer().decode_batch(tokens)
+
+
+def transcribe_with_onnx(audio, model="moonshine/base"):
+    from .onnx_model import MoonshineOnnxModel
+
+    if isinstance(model, str):
+        model = MoonshineOnnxModel(model_name=model)
+    assert isinstance(
+        model, MoonshineOnnxModel
+    ), f"Expected a MoonshineOnnxModel model or a model name, not a {type(model)}"
+    audio = load_audio(audio, return_numpy=True)
+    assert_audio_size(audio)
+
+    tokens = model.generate(audio)
+    return load_tokenizer().decode_batch(tokens)
+
+
+def load_tokenizer():
     tokenizer_file = ASSETS_DIR / "tokenizer.json"
     tokenizer = tokenizers.Tokenizer.from_file(str(tokenizer_file))
-    return tokenizer.decode_batch(tokens)
+    return tokenizer
 
 
 def benchmark(audio, model="moonshine/base"):
